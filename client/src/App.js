@@ -1,41 +1,35 @@
 import React from 'react';
 import { reset as resetStyles } from 'styled-reset';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import { Switch, Route } from 'react-router-dom';
+import Header from './components/Header/Header';
+import Content from './components/styled/Content';
+import LandingPage from './pages/landing';
+import LoginPage from './pages/login';
+import RegisterPage from './pages/register';
 
 const GlobalStyles = createGlobalStyle`
     ${resetStyles}
+    *,*:before,*:after {
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
     body {
+      font-size: 62.5%;  /* 1em = 10px, 1.4em = 14px, etc */
     }
     .App {
     text-align: center;
     }
-
-    .Mudkip {
-      height: 30vmin;
-      margin:5vh auto;
-    }
-
-    .App-header {
-      background-color: ${props => props.theme.bgColor};
-      min-height: 96vh;
-      margin:2vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-size: calc(10px + 2vmin);
-      color: ${props => props.theme.textColor};
-      padding:5vh auto;
-    }
-
-    .App-link {
-      color: #09d3ac;
+    button, link {
+      cursor:pointer;
     }
 `;
 
 const theme = {
-  bgColor: '#282c34',
-  textColor: 'white'
+  white: '#fff',
+  dark: '#282c34',
+  linkText: '#282c34'
 };
 
 const App = () => {
@@ -43,15 +37,14 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <div className="App">
         <GlobalStyles />
-        <header className="App-header">
-          <h1>HELLO DOGE</h1>
-          <img
-            alt="Mudkip standing and waving"
-            className="Mudkip"
-            src="http://4.bp.blogspot.com/_9bqiDkaYkPQ/TIcJ7aptcEI/AAAAAAAAAAo/11dfODb3I4g/s320/mudkip.gif"
-          />
-          <h1>herd u liek mudkipz</h1>
-        </header>
+        <Header />
+        <Content>
+          <Switch>
+            <Route exact path="/" render={() => <LandingPage />} />
+            <Route exact path="/login" render={() => <LoginPage />} />
+            <Route exact path="/register" render={() => <RegisterPage />} />
+          </Switch>
+        </Content>
       </div>
     </ThemeProvider>
   );
