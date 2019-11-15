@@ -54,3 +54,10 @@ Every time you prepare to push your work, you will follow these steps.
 ## Components
 
 ## Functions
+
+# Contributors List
+
+## Destiny Ross<br>
+
+website: destinylross.com <br>
+linkedin: https://linkedin.com/in/destiny-ross<br> github: https://github.com/destiny-ross-dev
