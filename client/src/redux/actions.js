@@ -1,4 +1,4 @@
-import axios from 'axios';
+// import axios from 'axios';
 
 import { userActionTypes } from './actionTypes';
 
@@ -34,6 +34,7 @@ export const userLogout = () => ({
   type: userActionTypes.USER_LOGOUT
 });
 
+// this is a dummy async function to mimic a backend API call to login/register user. please remove when the backend is in place.
 const resolveAfter2Seconds = x => {
   return new Promise(resolve => {
     setTimeout(() => {
@@ -47,9 +48,9 @@ export const registerUser = registrationFormData => {
     // alert the app state that the register request has begun:
     dispatch(userRegisterRequest);
 
-    // const result = await axios('/auth/register');
+    // async mimic of backend API call
     const result = await resolveAfter2Seconds({
-      user: { username: registrationFormData.username }
+      user: { email: registrationFormData.email }
     });
 
     dispatch(userRegisterSuccess(result.user));
@@ -59,10 +60,10 @@ export const registerUser = registrationFormData => {
 export const loginUser = loginFormData => {
   return async dispatch => {
     // alert the app state that the login request has begun:
-    dispatch(userLoginRequest);
+    dispatch(userLoginRequest());
 
-    // const result = await axios('/auth/login');
-    const result = await resolveAfter2Seconds({ user: { username: loginFormData.username } });
+    // async mimic of backend API call
+    const result = await resolveAfter2Seconds({ user: { email: loginFormData.email } });
 
     dispatch(userLoginSuccess(result.user));
   };
