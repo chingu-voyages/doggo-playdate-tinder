@@ -5,11 +5,15 @@ import { connect } from 'react-redux';
 import { loginUser } from '../redux/actions';
 import StyledForm from '../components/styled/Form';
 
-const LoginPage = () => {
+const LoginPage = ({ user, isLoggingInUser, authErrors, loginUser }) => {
   const [formState, updateFormState] = useState({ email: '', password: '' });
 
   const handleChange = e => {
     updateFormState({ ...formState, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = () => {
+    loginUser({ email: formState.email, password: formState.password });
   };
 
   return (
@@ -20,7 +24,7 @@ const LoginPage = () => {
         method="post"
         onSubmit={e => {
           e.preventDefault();
-          console.log('submit');
+          handleSubmit();
         }}
       >
         <h1>Log into your account</h1>
@@ -49,7 +53,7 @@ const LoginPage = () => {
           Submit
         </button>
         <Link to="/register">
-          <p>Don&#39t have an account?</p>
+          <p>Don&#39;t have an account?</p>
         </Link>
       </StyledForm>
     </div>
@@ -64,7 +68,4 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = { loginUser };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LoginPage);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
