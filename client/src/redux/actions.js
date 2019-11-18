@@ -42,25 +42,27 @@ const resolveAfter2Seconds = x => {
   }, 2000);
 };
 
-export const registerUser = () => {
+export const registerUser = registrationFormData => {
   return async dispatch => {
     // alert the app state that the register request has begun:
     dispatch(userRegisterRequest);
 
     // const result = await axios('/auth/register');
-    const result = resolveAfter2Seconds({ user: { username: 'user1234' } });
+    // const result = resolveAfter2Seconds({ user: { username: 'user1234' } });
+    const result = resolveAfter2Seconds({ user: { username: registrationFormData.username } });
 
     dispatch(userRegisterSuccess(result.user));
   };
 };
 
-export const loginUser = () => {
+export const loginUser = loginFormData => {
   return async dispatch => {
     // alert the app state that the login request has begun:
     dispatch(userLoginRequest);
 
     // const result = await axios('/auth/login');
-    const result = resolveAfter2Seconds({ user: { username: 'user1234' } });
+    // const result = resolveAfter2Seconds({ user: { username: 'user1234' } });
+    const result = resolveAfter2Seconds({ user: { username: loginFormData.username } });
 
     dispatch(userLoginSuccess(result.user));
   };
