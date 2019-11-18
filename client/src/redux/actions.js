@@ -48,8 +48,9 @@ export const registerUser = registrationFormData => {
     dispatch(userRegisterRequest);
 
     // const result = await axios('/auth/register');
-    // const result = resolveAfter2Seconds({ user: { username: 'user1234' } });
-    const result = resolveAfter2Seconds({ user: { username: registrationFormData.username } });
+    const result = await resolveAfter2Seconds({
+      user: { username: registrationFormData.username }
+    });
 
     dispatch(userRegisterSuccess(result.user));
   };
@@ -61,8 +62,7 @@ export const loginUser = loginFormData => {
     dispatch(userLoginRequest);
 
     // const result = await axios('/auth/login');
-    // const result = resolveAfter2Seconds({ user: { username: 'user1234' } });
-    const result = resolveAfter2Seconds({ user: { username: loginFormData.username } });
+    const result = await resolveAfter2Seconds({ user: { username: loginFormData.username } });
 
     dispatch(userLoginSuccess(result.user));
   };
