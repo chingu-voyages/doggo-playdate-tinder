@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import { loginUser } from '../redux/actions';
 import StyledForm from '../components/styled/Form';
 
-const LoginPage = ({ user, isLoggingInUser, authErrors, loginUser }) => {
+const LoginPage = props => {
   const [formState, updateFormState] = useState({ email: '', password: '' });
 
   const handleChange = e => {
@@ -13,7 +14,7 @@ const LoginPage = ({ user, isLoggingInUser, authErrors, loginUser }) => {
   };
 
   const handleSubmit = () => {
-    loginUser({ email: formState.email, password: formState.password });
+    props.attemptLogin({ email: formState.email, password: formState.password });
   };
 
   return (
@@ -66,6 +67,21 @@ const mapStateToProps = state => ({
   authErrors: state.authErrors
 });
 
-const mapDispatchToProps = { loginUser };
+//  Initially, I tried to write mapDispatchToProps like so:
+//    const mapDispatchToProps = { loginUser };
+//  But the linter wouldn't let this pass because loginUser is 'import'ed at the top of the page, and also passed down as props through the component. So I had to rename this function as attemptLogin in order to get this page to pass the linter.
+
+const mapDispatchToProps = dispatch => {
+  return {
+    attemptLogin: formData => {
+      dispatch(loginUser(formData));
+    }
+  };
+};
+
+// The linter also wants everything that the component receives and uses from props to be validated with prop-types:
+LoginPage.propTypes = {
+  attemptLogin: PropTypes.func.isRequired
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
