@@ -11,8 +11,9 @@ export const userRegisterSuccess = user => ({
   user
 });
 
-export const userRegisterFailure = () => ({
-  type: userActionTypes.USER_REGISTER_FAILURE
+export const userRegisterFailure = errors => ({
+  type: userActionTypes.USER_REGISTER_FAILURE,
+  errors
 });
 
 export const userLoginRequest = () => ({
@@ -24,8 +25,9 @@ export const userLoginSuccess = user => ({
   user
 });
 
-export const userLoginFailure = () => ({
-  type: userActionTypes.USER_LOGIN_FAILURE
+export const userLoginFailure = errors => ({
+  type: userActionTypes.USER_LOGIN_FAILURE,
+  errors
 });
 
 export const userLogout = () => ({
