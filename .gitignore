@@ -2,7 +2,7 @@
 
 # dependencies
 /client/node_modules
-/node_modules
+/server/node_modules
 /client/.pnp
 /client/.pnp.js
 
@@ -20,7 +20,7 @@
 /client/.env.production.local
 .vscode
 /client/yarn.lock
-
+/server/yarn.lock
 .env
 
 /client/npm-debug.log*
