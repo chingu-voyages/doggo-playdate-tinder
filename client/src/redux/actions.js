@@ -1,6 +1,6 @@
-// import axios from 'axios';
+import axios from 'axios';
 
-import { userActionTypes } from './actionTypes';
+import userActionTypes from './actionTypes';
 
 export const userRegisterRequest = () => ({
   type: userActionTypes.USER_REGISTER_REQUEST
@@ -30,18 +30,10 @@ export const userLoginFailure = errors => ({
   errors
 });
 
-export const userLogout = () => ({
-  type: userActionTypes.USER_LOGOUT
+export const getUserProfileSuccess = user => ({
+  type: userActionTypes.GET_USER_PROFILE_SUCCESS,
+  user
 });
-
-// this is a dummy async function to mimic a backend API call to login/register user. please remove when the backend is in place.
-const resolveAfter2Seconds = x => {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(x);
-    });
-  }, 2000);
-};
 
 export const registerUser = registrationFormData => {
   return async dispatch => {
@@ -49,22 +41,53 @@ export const registerUser = registrationFormData => {
     dispatch(userRegisterRequest);
 
     // async mimic of backend API call
-    const result = await resolveAfter2Seconds({
-      user: { email: registrationFormData.email }
-    });
-
-    dispatch(userRegisterSuccess(result.user));
+    const result = await axios.post('/api/users/register', registrationFormData);
+    dispatch(userRegisterSuccess(result.data));
   };
 };
 
+export const clearErrors = () => ({
+  type: userActionTypes.CLEAR_ERRORS
+});
+
 export const loginUser = loginFormData => {
   return async dispatch => {
-    // alert the app state that the login request has begun:
-    dispatch(userLoginRequest());
+    dispatch(await userLoginRequest());
+    try {
+      const response = await axios.post('/api/users/login', loginFormData);
+      dispatch(userLoginSuccess(response.data));
+    } catch (error) {
+      dispatch(userLoginFailure(error.response.data.err));
+    }
+  };
+};
 
-    // async mimic of backend API call
-    const result = await resolveAfter2Seconds({ user: { email: loginFormData.email } });
+export const getProfile = () => {
+  return async dispatch => {
+    const result = await axios.get('/api/users/profile');
+    dispatch(getUserProfileSuccess(result.data));
+  };
+};
 
-    dispatch(userLoginSuccess(result.user));
+export const userLogoutRequest = () => ({
+  type: userActionTypes.USER_LOGOUT_REQUEST
+});
+export const userLogoutSuccess = () => ({
+  type: userActionTypes.USER_LOGOUT_SUCCESS
+});
+export const userLogoutFailure = errors => ({
+  type: userActionTypes.USER_LOGOUT_FAILURE,
+  errors
+});
+
+export const userLogout = () => {
+  return async dispatch => {
+    dispatch(userLogoutRequest());
+    try {
+      await axios.post('/api/users/logout');
+      dispatch(userLogoutSuccess());
+    } catch (err) {
+      dispatch(userLogoutFailure(err.response.data.err));
+    }
   };
 };
