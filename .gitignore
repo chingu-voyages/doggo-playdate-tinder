@@ -19,6 +19,7 @@
 /client/.env.test.local
 /client/.env.production.local
 .vscode
+/client/package-lock.json
 /client/yarn.lock
 /server/yarn.lock
 .env
