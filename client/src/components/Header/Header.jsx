@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import StyledHeader from './Header.styles.jsx';
-import { userLogout } from '../../redux/actions.js';
+import StyledHeader from './Header.styles';
+import { userLogout } from '../../redux/actions';
 
 const Header = ({ user, logout, history }) => {
   const handleLogout = async () => {
@@ -18,7 +18,10 @@ const Header = ({ user, logout, history }) => {
         <ul>
           <StyledHeader.NavItem to="/about">About</StyledHeader.NavItem>
           {user.username ? (
-            <StyledHeader.Button onClick={() => handleLogout()}>Logout</StyledHeader.Button>
+            <>
+              <StyledHeader.NavItem to="/my_profile">My Profile</StyledHeader.NavItem>
+              <StyledHeader.Button onClick={() => handleLogout()}>Logout</StyledHeader.Button>
+            </>
           ) : (
             <StyledHeader.NavItem to="/login">Login</StyledHeader.NavItem>
           )}
