@@ -25,13 +25,13 @@ const PrivateRoute = ({ component: Component, user, ...rest }) => {
 
 PrivateRoute.propTypes = {
   user: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     username: PropTypes.string.isRequired,
     area_code: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired
   }),
-  component: PropTypes.func.isRequired // eslint-disable-line react/forbid-prop-types
+  component: PropTypes.object.isRequired // eslint-disable-line react/forbid-prop-types
 };
 
 PrivateRoute.defaultProps = {

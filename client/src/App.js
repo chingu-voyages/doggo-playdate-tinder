@@ -66,7 +66,7 @@ const App = ({ user, history }) => {
 
 App.propTypes = {
   user: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     username: PropTypes.string.isRequired,
     area_code: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,

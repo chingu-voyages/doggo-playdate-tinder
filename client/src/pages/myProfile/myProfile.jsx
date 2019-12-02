@@ -24,7 +24,7 @@ const MyProfile = ({ user }) => {
 
 MyProfile.propTypes = {
   user: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     username: PropTypes.string.isRequired,
     area_code: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
