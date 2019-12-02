@@ -4,6 +4,7 @@ import { reset as resetStyles } from 'styled-reset';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+
 import Header from './components/Header/Header';
 import Content from './components/styled/Content';
 import LandingPage from './pages/landing/landing';
@@ -11,6 +12,8 @@ import LoginPage from './pages/login/login';
 import RegisterPage from './pages/register/register';
 import CreateProfile from './pages/createProfile';
 import DashboardPage from './pages/dashboard/dashboard';
+import MyProfilePage from './pages/myProfile/myProfile';
+import PrivateRoute from './PrivateRoute';
 
 const GlobalStyles = createGlobalStyle`
     ${resetStyles}
@@ -50,6 +53,7 @@ const App = ({ user, history }) => {
             <Route exact path="/" render={props => <LandingPage {...props} />} />
             <Route path="/register" render={props => <RegisterPage {...props} />} />
             <Route path="/login" render={props => <LoginPage {...props} />} />
+            <PrivateRoute path="/my_profile" component={MyProfilePage} />
             <Route path="/dashboard" render={props => <DashboardPage {...props} />} />
             <Route path="/create-profile" render={props => <CreateProfile {...props} />} />
           </Switch>
@@ -59,6 +63,7 @@ const App = ({ user, history }) => {
     </ThemeProvider>
   );
 };
+
 App.propTypes = {
   user: PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -69,12 +74,15 @@ App.propTypes = {
   }),
   history: PropTypes.object.isRequired // eslint-disable-line react/forbid-prop-types
 };
+
 const mapStateToProps = state => {
   return {
     user: state.user.user
   };
 };
+
 App.defaultProps = {
   user: {}
 };
+
 export default withRouter(connect(mapStateToProps, {})(App));
